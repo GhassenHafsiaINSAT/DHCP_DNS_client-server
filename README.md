@@ -1,7 +1,7 @@
 # Network Programming
 
 ## What is socket?
-- A socket is aa way to speak to other programs, using standard Unix file descriptors.
+- A socket is a way to speak to other programs, using standard Unix file descriptors.
 
 - When Unix programs do any ort of I/O, they do by reading or writing file descriptor.
 
