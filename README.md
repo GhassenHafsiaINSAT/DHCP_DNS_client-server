@@ -103,6 +103,7 @@ unsigned short int     sin_port;        //  Port number
 struct in_addr         sin_addr;        //  Internet address
 unsigned char          sin_zero[8];     //  Same size as struct sockaddr
 };
+```
 
    - Specialized version of `struct sockaddr` for IPv4.
    - Contains `sin_family` (AF_INET), `sin_port` (port number), `sin_addr` (IP address), and padding.
