@@ -1,36 +1,4 @@
-#include <sys/socket.h>  // basic socket definition
-#include <sys/types.h>
-#include <signal.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <stdarg.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <netdb.h>
-#include <stdlib.h>
-
-//standard HTTP port
-#define SERVER_PORT 80
-
-
-//buffer length
-#define MAXLINE 4096
-
-#define SA struct sockaddr
-
-
-
-//define a macro for error handling
-
-#define HANDLE_ERROR(msg)  do { \
-    fprintf(stderr, "Error: %s\n", msg); \
-    exit(EXIT_FAILURE); \
-} while (0)
-
+#include "common.h"
 
 int main(int argc, char **argv){
 

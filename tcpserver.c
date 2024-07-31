@@ -1,31 +1,15 @@
-#include <sys/socket.h>  // basic socket definition
-#include <sys/types.h>
-#include <signal.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <stdarg.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <netdb.h>
-#include <stdlib.h>
-
-#define SERVER_PORT 18000 
-
-#define BUFFER_SIZE 4096
-
-#define SA struct sockaddr
-
+#include "common.h"
 
 int main(int argc, char **argv){
 
-    int                     listenfd, connfd, n; 
-    struct sockaddr_in      servaddr; 
-    unit8_t                 buff[MAXLINE+1];
-    unit8_t                 recvline[MAXLINE]; 
+    /* file descriptors for the listening and connection sockets
+       n number to store the number of bytes read from the connection*/
+    int listenfd, connfd, n; 
+
+    // a structure to hold the server address information
+    struct sockaddr_in servaddr; 
+    char buff[MAXLINE+1];
+    char recvline[MAXLINE]; 
 
     if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     HANDLE_ERROR("socket error");
@@ -59,7 +43,7 @@ int main(int argc, char **argv){
             if (recvline[n-1] == 'n'){
                 break;  
             }
-            memset((recvline, 0, MAXLINE)); 
+            memset(recvline, 0, MAXLINE); 
         }
 
         if(n<0) HANDLE_ERROR("read error"); 

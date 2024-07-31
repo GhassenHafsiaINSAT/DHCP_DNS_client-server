@@ -104,7 +104,7 @@ struct in_addr         sin_addr;        //  Internet address
 unsigned char          sin_zero[8];     //  Same size as struct sockaddr
 };
 ```
-
+   - structure defined in the `<netinet/in.h>` header file, used to specify an endpoint address for IPv4 sockets.  
    - Specialized version of `struct sockaddr` for IPv4.
    - Contains `sin_family` (AF_INET), `sin_port` (port number), `sin_addr` (IP address), and padding.
 
@@ -162,3 +162,7 @@ char       __ss_pad2[_SS_PAD2SIZE];
 - Use `struct sockaddr_in` for IPv4 addresses.
 - Use `struct sockaddr_in6` for IPv6 addresses.
 - Always convert port numbers to Network Byte Order using `htons()`.
+
+
+## `connect` vs `bind`
+- In simple terms, bind sets up the server's address and port for listening, while connect is used by the client to reach out to the server and initiate a connection.
