@@ -13,16 +13,15 @@
 #include <netdb.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <netinet/in.h>
 
 // standard HTTP port
-#define SERVER_PORT 80
+#define SERVER_PORT 18000
 
-#define CLIENT_PORT 18000
+#define CLIENT_PORT 80
 
 // buffer length
 #define MAXLINE 4096
-
-#define SA struct sockaddr
 
 
 //define a macro for error handling

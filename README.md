@@ -1,15 +1,26 @@
 # Network Programming
 
-## What is socket?
+## System calls
+
+### `socket()` Get the file descriptor
+
 - A socket is a way to speak to other programs, using standard Unix file descriptors.
 
 - When Unix programs do any ort of I/O, they do by reading or writing file descriptor.
 
-- A file descriptor is simply an integer associated with an open file, it can be also a network connection, FIFO, a pipe, a terminal.
 
-- You can commincate through the socket using `read()` and `write()`, but `send()` and `recv()` offer much grater control over your data transmission.
+```c
+int socket(int domain, int type, int protocol); 
+```
 
-## Two types of sockets
+- **domain** : `PF_INET` IPv4  or `PF_INET6` IPv6 
+- **type** : `SOCK_DGRAM`Datagram socket or `SOCK_STREAM` stream socket
+- **protocol** : TCP or UDP 
+
+- `socket()` return a positive int, and `-1` on error.  
+
+### Two types of sockets
+
 - **Stream sockets**:
 
   - Are referred to as `SOCK_STREAM`, are reliable two-way connected communication streams.
@@ -22,6 +33,31 @@
   - They use UDP, so they are really fast.
   - They are connectionless, they dont have to maintain an open connectinon, you have to build the packet with IP header on it and send it out.
   - multiplayer games and streaming audio, video use datagram sockets, where dropping few packets is not the end of world.    
+
+## `getaddrinfo()`
+
+- It helps to set up the structs you need later on.  
+
+```c
+int getaddrinfo(const char *node,
+                const char *service, 
+                const struct addrinfo *hints, 
+                struct addrinfo **res); 
+```
+- The `node` is the hostname or IP address you want to connect to.  
+- The `service` is the port number.  
+- The `hints` points to `struct addrinfo` that youève already filled with info.   
+- You give this function three input parameters, and it gives you a pointer to a linked list, `res`, of results.  
+
+
+
+
+
+
+
+
+
+
 
 ## IP addresses
 

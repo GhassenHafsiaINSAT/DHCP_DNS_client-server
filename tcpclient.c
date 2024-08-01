@@ -2,7 +2,6 @@
 
 int main(int argc, char **argv){
 
-    if (argc != 2) HANDLE_ERROR("missing arguments bro"); 
     //local variables
     int sockfd, n; 
     int sendbytes; 
@@ -21,12 +20,12 @@ int main(int argc, char **argv){
     servaddr.sin_port = htons(SERVER_PORT); 
 
     // establish a connection to a server specified by the address provided in servaddr
-    if(connect(sockfd,(SA *) &servaddr, sizeof(servaddr)) <0 )
+    if(connect(sockfd,(struct sockaddr *) &servaddr, sizeof(servaddr)) <0 )
     {
         HANDLE_ERROR("while connecting to the server"); 
     }
 
-    sprintf(sendline, "GET / HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", argv[1]); 
+    sprintf(sendline, "GET / HTTP/1.1\r\nHost: localhost:18000\r\nConnection: close\r\n\r\n"); 
     sendbytes = strlen(sendline); 
 
     if (write(sockfd, sendline, sendbytes) != sendbytes){

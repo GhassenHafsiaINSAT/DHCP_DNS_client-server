@@ -20,8 +20,10 @@ int main(int argc, char **argv){
     servaddr.sin_addr.s_addr = htons(INADDR_ANY); 
 
 
-    if ((bind(listenfd, (SA *) &servaddr, sizeof(servaddr))) <0)
-        HANDLE_ERROR("bind error"); 
+    if ((bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)))< 0)
+        {
+            HANDLE_ERROR("bind error"); 
+        }
 
     if ((listen(listenfd, 10)) <0) 
         HANDLE_ERROR("listen error"); 
@@ -32,12 +34,12 @@ int main(int argc, char **argv){
 
         printf("waiting for a connection on port %d\n", SERVER_PORT); 
         fflush(stdout); 
-        connfd = accept(listenfd, (SA *) NULL, NULL);
+        connfd = accept(listenfd, (struct sockaddr*) NULL, NULL);
         // zero out the recieve buffer to make sure it ends ip null
         memset(recvline, 0, MAXLINE); 
         // read the client message
         while((n=read(connfd, recvline, MAXLINE-1) ) >0)
-        {
+        {   
             fprintf(stdout, "\n%s\n", recvline);
 
             if (recvline[n-1] == 'n'){

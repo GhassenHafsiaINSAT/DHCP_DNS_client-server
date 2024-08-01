@@ -1,17 +1,11 @@
 CC=gcc
-CFLAGS=-c -Wall
 
+client: 
+	$(CC) -o client tcpclient.c
 
-all: client
-
-client: tcpclient.o
-	$(CC)  tcpclient.o -o client
-
-
-tcpclient.o: tcpclient.c
-	$(CC) $(CFLAGS) tcpclient.c
-
+server: 
+	$(CC) -o server tcpserver.c
 
 
 clean: 
-	rm -r	client tcpclient.o
+	rm -r	client tcpclient.o server tcpserver.o 
