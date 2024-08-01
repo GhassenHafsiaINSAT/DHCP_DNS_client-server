@@ -49,12 +49,11 @@ int getaddrinfo(const char *node,
 - The `hints` points to `struct addrinfo` that youève already filled with info.   
 - You give this function three input parameters, and it gives you a pointer to a linked list, `res`, of results.  
 
+## `bind()` what port am I on? 
+- In order to listen for incomming calls, you have to associate the socket with a port on your local machine.  
 
-
-
-
-
-
+```c
+bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
 
 
 

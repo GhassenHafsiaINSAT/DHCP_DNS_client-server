@@ -31,12 +31,19 @@ int main(int argc, char **argv){
     for ( ; ; ) {
         struct sockaddr_in addr; 
         socklen_t addr_len; 
+        char client_address[MAXLINE-1]; 
 
         printf("waiting for a connection on port %d\n", SERVER_PORT); 
         fflush(stdout); 
-        connfd = accept(listenfd, (struct sockaddr*) NULL, NULL);
+        connfd = accept(listenfd, (struct sockaddr*) &addr, &addr_len);
+
+        inet_ntop(AF_INET, &addr, client_address, MAXLINE); 
+        printf("Client connection: %s\n",client_address); 
+
         // zero out the recieve buffer to make sure it ends ip null
         memset(recvline, 0, MAXLINE); 
+
+
         // read the client message
         while((n=read(connfd, recvline, MAXLINE-1) ) >0)
         {   
@@ -52,9 +59,15 @@ int main(int argc, char **argv){
 
 
         //send a response
-        snprintf((char*)buff, sizeof(buff), "HTTP/1.0 200 OK \r\n\rHELLO"); 
+        snprintf((char*)buff, sizeof(buff),
+         "HTTP/1.0 200 OK\r\n"
+         "Content-Type: text/plain\r\n"
+         "Content-Length: 5\r\n"
+         "\r\n"
+         "HELLO");
 
         write(connfd, (char*)buff, strlen((char*)buff)); 
+        fprintf(stdout, "HTTP/1.0 200 OK\r\n"); 
         close(connfd); 
     }
 }
