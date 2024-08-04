@@ -65,10 +65,11 @@ $ if config <interface>netmask<netmask>              // set statically the netma
 
 - port numbers identify services within the same IP address.
 - Each connection will have both source port and destination port numbers.
+- It is part of transport layer. 
 - 0~65,535
-- 0~1,024 well known
-- 1,024~49,125 registered
-- 49,152~65,535 Dynamic/private
+    - 0~1,024 well known
+    - 1,024~49,125 registered
+    - 49,152~65,535 Dynamic/private
 
 ## Subnet
 
@@ -83,12 +84,23 @@ $ if config <interface>netmask<netmask>              // set statically the netma
 - It Translates IP addresses into MAC addresses to help devices locate each other on a local network.
 - The machine should have a table that maps IP addresses to MAC addresses within its subnet, this table called ARP table.
 
-## Domain Name server (DNS)
-- When accessing a server, it is normally identified by a  domain name instead of IP address, more readable.  
-  - DNS Translates domain names (e.g., www.example.com) into IP addresses (e.g., 192.0.2.1) to facilitate communication over the internet.
+## Domain Name System (DNS)
+- DNS is used to map IP addresses into names.  
+
+- Order of Lookup:
+	- /etc/hosts: The system first checks this file for hostname-to-IP mappings. If a match is found, it uses that IP address.
+	- DNS Servers (via /etc/resolv.conf): If the hostname is not found in /etc/hosts, the system queries the DNS servers listed in /etc/resolv.conf.
 
 ### DNS Query
 - A DNS query is a demand for information sent from a user's computer to a DNS server, asking for the IP address associated with a domain name.
+
+
+## Dynamic Host Configuration protocol (DHCP)
+- DHCP is used to obtain an IP address when a host or device fisrt comes on the network.
+- Here is how DHCP process works:
+  	1. When a computer starts up, it sends a DHCP request out on the network.
+  	2. The DHCP server responds with the IP address configuration for that device.
+	3. That IP address is marked as reserved so that it's not assigned to some other device.
 
 ## OSI and TCP/IP Models
 
@@ -107,6 +119,109 @@ $ if config <interface>netmask<netmask>              // set statically the netma
   - **Layer 3**: Network
   - **Layer 2**: Data Link
   - **Layer 1**: Physical
+
+## Utility Appications
+
+- **Ping** is the most basic network test tool, checking network connectivity or the round trip delay to the destination.
+- It sends ICMP packet across the network and notifies you whether there is a response.
+```sh
+$ ping www.google.com
+PING www.google.com (142.250.180.132) 56(84) bytes of data.
+64 bytes from mil04s43-in-f4.1e100.net (142.250.180.132): icmp_seq=1 ttl=115 time=33.5 ms
+64 bytes from mil04s43-in-f4.1e100.net (142.250.180.132): icmp_seq=2 ttl=115 time=33.7 ms
+64 bytes from mil04s43-in-f4.1e100.net (142.250.180.132): icmp_seq=3 ttl=115 time=33.5 ms
+```
+- Time to live TTL: field in the packet
+
+- **traceroute** : probes the network between the local system and a destination, gathering information about each IP router in the path.
+```sh
+traceroute www.facebook.com
+```
+
+## Collecting Network Statistics and Counters 
+- When performing network troubleshooting, its always good to gather some statistics.
+```sh
+$ netstat 	// Show us the active processes that have the network interface open
+
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 ghassen-VivoBook-:56790 mrs08s19-in-f22.1:https TIME_WAIT  
+tcp        0      0 ghassen-VivoBook-:55436 mil04s29-in-f14.1:https ESTABLISHED
+tcp        0      0 ghassen-VivoBook-:55160 lb-140-82-114-26-:https ESTABLISHED
+tcp        0      0 ghassen-VivoBook-:56798 mrs08s19-in-f22.1:https TIME_WAIT  
+tcp        0      0 ghassen-VivoBook-:42538 mrs08s19-in-f4.1e:https TIME_WAIT 
+```
+
+
+### Network Interface Bounding
+- It is useful when you need more bandwisth than a single interface can provide.  
+
+- To bound multiple Ethernet interfaces into a single network interface.  
+```sh
+sudo ip link add bond0 type bond mode 802.3ad
+sudo ip link set eth0 master bond0
+sudo ip link set eth1 master bond0
+sudo ip link set eth2 master bond0
+```
+![image](https://github.com/GhassenHafsiaINSAT/HackerRank-The_Linux_Shell/assets/110825502/ed9b7868-84a4-4070-8002-b9555e24d00b)
+
+## General structure
+
+- The user accesses a remote machine for different purposes: copying files, accessing terminal in the remote machine, accessing the gui of the remote machine
+    - The user runs a client application on his local machine
+    - The remote machine will be running a server application
+    - The server application will be running on a Daemon process waiting for a connection from the client side
+
+## Remote Access of Machine 
+### telnet protocol
+```sh
+$ telnet <destination address>
+```
+- telnet enable the user at the client side to access a remote machine by opening terminal on it.  
+- A server application must be running on the destination machine to accept client connections.   
+
+### Transporting files (ftp protocol) 
+```sh
+$ ftp <remote machine address>
+
+get myfile.txt        # get files from remote machine
+mget *.exe            # get multiple files from remote machine
+put myfile.txt        # send file to remote machine
+bye                   # exit session 
+```
+- ftp enables the client to move files from/to remote machine
+
+Both telnet and FTP do not use a secured connection, information travel between local and remot machine in clear text.  
+
+### SSH protocol 
+```sh
+$ ssh <destination address>
+```
+- same as telnet protocol except for that the connection will be secured.
+
+### Secure file copy 
+```sh
+$ scp <remote server>: <remote filename>
+$ scp <local filename><user>:.
+## Understanding Linux Internetworking
+```
+## wget 
+```sh
+wget <url of the file>
+```
+- donwloading file from the internet from command line, useful in scripts.
+
+
+## Bridging 
+- When you want to pass traffic between two networrk interfaces, you can create a **bridge**
+```sh
+sudo ip link add br0 type bridge	// Creating bridge named br0
+sudo ip link set eth0 master br0	// Adding the interface to the bridge
+sudo ip link set eth1 master br0
+```
+
+![image](https://github.com/GhassenHafsiaINSAT/HackerRank-The_Linux_Shell/assets/110825502/0aa4a074-96df-48eb-8431-c301bf1c297a)
+
 
 ## Network Packets
 ### What is a Packet?
