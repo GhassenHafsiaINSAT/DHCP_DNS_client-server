@@ -14,19 +14,39 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <netinet/in.h>
+#include <errno.h>
+#include <time.h>
 
-// standard HTTP port
-#define SERVER_PORT 18000
+// Server Port
+#define SERVER_PORT 9877
 
-#define CLIENT_PORT 80
-
-// buffer length
+// Buffer Length
 #define MAXLINE 4096
 
+// Queue length
+#define LISTENQ 10
 
-//define a macro for error handling
+
+// Define a macro for error handling
 
 #define HANDLE_ERROR(msg)  do { \
     fprintf(stderr, "Error: %s\n", msg); \
     exit(EXIT_FAILURE); \
-} while (0)
+} while(0)
+
+
+#define err_sys(msg) do { \
+    fprintf(stderr, "Error: %s : %s\n", msg, strerror(errno)); \
+    exit(EXIT_FAILURE); \
+} while(0)
+
+
+#define err_quit(msg) do{ \
+    fprintf(stderr,"Error: %s\n", msg); \
+    exit(EXIT_FAILURE); \
+} while(0)
+
+
+
+
+
