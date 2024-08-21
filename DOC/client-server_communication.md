@@ -9,3 +9,6 @@
 - We will use the wildcard `INADDR_ANY`, it tells the system to acceptd a connection destined for any local interface
 - The server blocks in the call to accept, waiting for a client connection to complete
 - For each client, fork() spawns a child, and the child handles the new client
+
+- A `read` or `write` on a stream socket might
+input or output fewer bytes than requested because buffer limits might be reached for the socket in the kernel.

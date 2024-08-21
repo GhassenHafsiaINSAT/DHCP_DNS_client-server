@@ -7,7 +7,7 @@ void str_echo(int sockfd){
 
     again: 
     while ((n = read(sockfd, buff, MAXLINE)) > 0)
-        write(sockfd, buff, n); 
+        writen(sockfd, buff, n); 
     
     if (n>0 && errno == EINTR)
         goto again; 
