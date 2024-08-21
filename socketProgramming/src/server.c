@@ -1,18 +1,19 @@
 #include "common.h"
+#include "str_echo.h"
 
 int main(int argc, char **argv){
+
     int listenfd, connfd; 
     pid_t childpid; 
+    socklen_t clilen;
     struct sockaddr_in servaddr, cliaddr; 
-    time_t ticks; 
-    char buff[MAXLINE]; 
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0); 
 
     bzero(&servaddr, sizeof(servaddr)); 
 
     servaddr.sin_family = AF_INET; 
-    servaddr.sin_port = htons(13); 
+    servaddr.sin_port = htons(SERVER_PORT); 
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
 
     if (bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0)
@@ -21,9 +22,10 @@ int main(int argc, char **argv){
     listen(listenfd, LISTENQ); 
 
     for ( ; ; ){
-        printf("listening on port 13\n"); 
+        printf("listening on port 9877\n"); 
+        clilen = sizeof(cliaddr); 
         
-        connfd = accept(listenfd, (struct sockaddr *) &cliaddr, sizeof(cliaddr)); 
+        connfd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen); 
         
         if ((childpid = fork()) == 0){
             close(listenfd); 

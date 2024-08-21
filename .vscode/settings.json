@@ -2,6 +2,8 @@
   "files.associations": {
     "signal.h": "c",
     "socket.h": "c",
-    "types.h": "c"
+    "types.h": "c",
+    "common.h": "c",
+    "str_echo.h": "c"
   }
 }

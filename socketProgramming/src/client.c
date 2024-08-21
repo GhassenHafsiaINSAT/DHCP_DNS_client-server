@@ -1,8 +1,8 @@
 #include "common.h"
+#include "str_cli.h"
 
 int main(int argc, char **argv) {
-    int sockfd, n;
-    char recvline[MAXLINE + 1];
+    int sockfd;
     struct sockaddr_in servaddr;
 
     if (argc != 2)
@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(13); 
+    servaddr.sin_port = htons(SERVER_PORT); 
 
     if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) < 0)
         err_quit("inet_pton error for");

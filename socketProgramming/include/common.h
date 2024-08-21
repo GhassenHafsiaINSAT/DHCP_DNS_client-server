@@ -1,3 +1,6 @@
+#ifndef COMMON_H
+#define COMMON_H
+
 #include <sys/socket.h> // basic socket definition
 #include <sys/types.h>
 #include <signal.h>
@@ -46,7 +49,6 @@
     exit(EXIT_FAILURE); \
 } while(0)
 
-
-
+#endif // COMMON_H
 
 
