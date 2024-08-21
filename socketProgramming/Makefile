@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Iinclude
 
 # Object files for server and client
-OBJ_SERVER = server.o str_echo.o writen.o
+OBJ_SERVER = server.o str_echo.o writen.o readline.o
 OBJ_CLIENT = client.o str_cli.o readline.o writen.o
 
 # Executables
@@ -26,7 +26,7 @@ server.o: src/server.c include/common.h include/str_echo.h include/writen.h
 	$(CC) $(CFLAGS) -c src/server.c -o server.o
 
 # Compile str_echo.o from str_echo.c
-str_echo.o: src/str_echo.c include/common.h include/str_echo.h include/writen.h
+str_echo.o: src/str_echo.c include/common.h include/str_echo.h include/writen.h include/readline.h
 	$(CC) $(CFLAGS) -c src/str_echo.c -o str_echo.o
 
 # Compile writen.o from writen.c

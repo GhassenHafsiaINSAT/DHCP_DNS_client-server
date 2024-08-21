@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "writen.h"
+#include "readline.h"
 
 
 void str_echo(int sockfd); 

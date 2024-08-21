@@ -19,6 +19,10 @@
 #include <netinet/in.h>
 #include <errno.h>
 #include <time.h>
+#include <signal.h>
+
+// Define the function pointer type for signal handlers
+typedef void Sigfunc(int);
 
 // Server Port
 #define SERVER_PORT 9877

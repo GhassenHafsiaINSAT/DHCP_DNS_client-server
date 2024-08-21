@@ -2,16 +2,22 @@
 
 void str_echo(int sockfd){
 
+    int arg1, arg2; 
     ssize_t n; 
     char buff[MAXLINE]; 
 
-    again: 
-    while ((n = read(sockfd, buff, MAXLINE)) > 0)
-        writen(sockfd, buff, n); 
-    
-    if (n>0 && errno == EINTR)
-        goto again; 
-    else if(n<0)
-        err_sys("str_echo: read error"); 
+for ( ; ; ){    
+    if ((n = readline(sockfd, buff, MAXLINE)) == 0)
+        return; 
+   
+    if (sscanf(buff,"%d%d", &arg1, &arg2) == 2) 
+        sprintf(buff, "%d\n", arg1 + arg2); 
+   
+    else 
+        snprintf(buff, sizeof(buff), "input error\n");
+   
+    n = strlen(buff); 
+    writen(sockfd,  buff, n); 
+    }
 
 }
