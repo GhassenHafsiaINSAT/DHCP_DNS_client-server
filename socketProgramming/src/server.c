@@ -1,5 +1,4 @@
 #include "common.h"
-#include "str_echo.h"
 
 int main(int argc, char **argv){
 
@@ -13,7 +12,7 @@ int main(int argc, char **argv){
     bzero(&servaddr, sizeof(servaddr)); 
 
     servaddr.sin_family = AF_INET; 
-    servaddr.sin_port = htons(SERVER_PORT); 
+    servaddr.sin_port = htons(DHCP_SERVER_PORT); 
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
 
     if (bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)) < 0)
@@ -22,7 +21,7 @@ int main(int argc, char **argv){
     listen(listenfd, LISTENQ); 
 
     for ( ; ; ){
-        printf("listening on port 9877\n"); 
+        printf("listening on port 67 %% DHCP SERVER PORT\n"); 
         clilen = sizeof(cliaddr); 
         
         connfd = accept(listenfd, (struct sockaddr *) &cliaddr, &clilen); 

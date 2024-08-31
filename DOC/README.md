@@ -55,7 +55,7 @@ int getaddrinfo(const char *node,
 ```c
 bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
 
-
+```
 
 
 ## IP addresses

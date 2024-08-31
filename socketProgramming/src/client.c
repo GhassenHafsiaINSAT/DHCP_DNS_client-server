@@ -1,5 +1,4 @@
 #include "common.h"
-#include "str_cli.h"
 
 int main(int argc, char **argv) {
     int sockfd;
