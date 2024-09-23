@@ -35,11 +35,8 @@ typedef void Sigfunc(int);
 // Queue length
 #define LISTENQ 10
 
-// Pool size 
-#define POOL_SIZE 10
-
-// device ip length
-#define DEVICE_ID_LEN 16
+#define MAC_LEN 18
+#define IP_LEN 16
 
 // Define a macro for error handling
 #define HANDLE_ERROR(msg)  do { \
@@ -59,15 +56,6 @@ typedef void Sigfunc(int);
     exit(EXIT_FAILURE); \
 } while(0)
 
-char *ip;
-
-
-struct IPAddressPool {
-    char ip_start[INET_ADDRSTRLEN]; 
-    char ip_end[INET_ADDRSTRLEN]; 
-    int leased[POOL_SIZE]; 
-    char device_ids[POOL_SIZE][DEVICE_ID_LEN]; 
-};
 
 void str_echo(int sockfd); 
 
@@ -82,16 +70,5 @@ ssize_t readn(int fields, void *buff, size_t nbytes);
 void sig_chld(int signo);
 
 void str_cli(FILE *fp, int sockfd); 
-
-// initialize the IPAddressPool
-void init_pool(struct IPAddressPool *pool, const char *start, const char *end); 
-
-unsigned int ip_to_int(const char *ip); 
-
-void int_to_ip(unsigned int ip, char *buffer); 
-
-int checkout_ip(struct IPAddressPool *pool, const char *device_id, char *ip); 
-
-int release_ip(struct IPAddressPool *pool, const char *ip); 
 
 #endif // COMMON_H
