@@ -59,6 +59,8 @@ typedef void Sigfunc(int);
     exit(EXIT_FAILURE); \
 } while(0)
 
+char *ip;
+
 
 struct IPAddressPool {
     char ip_start[INET_ADDRSTRLEN]; 
@@ -88,7 +90,7 @@ unsigned int ip_to_int(const char *ip);
 
 void int_to_ip(unsigned int ip, char *buffer); 
 
-int checkout_ip(struct IPAddressPool *pool, char *out_ip); 
+int checkout_ip(struct IPAddressPool *pool, const char *device_id, char *ip); 
 
 int release_ip(struct IPAddressPool *pool, const char *ip); 
 
