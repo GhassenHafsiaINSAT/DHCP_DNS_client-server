@@ -98,7 +98,6 @@
 ```c
     close(sockfd); 
     exit(0);
-}
 ```
 
 
