@@ -1,4 +1,4 @@
-#include "sig_chld.h"
+#include "common.h"
 
 void sig_chld(int signo){
     pid_t pid; 

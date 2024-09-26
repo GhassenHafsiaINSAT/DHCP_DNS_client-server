@@ -1,4 +1,4 @@
-#include "../include/signal.h"
+#include "common.h"
 
 Sigfunc *signal(int signo, Sigfunc *func)
 {

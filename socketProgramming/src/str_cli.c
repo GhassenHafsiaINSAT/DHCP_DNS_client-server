@@ -1,6 +1,14 @@
-#include "str_cli.h"
+#include "common.h"
 
 void str_cli(FILE *fp, int sockfd){
+
+/*
+    - The fucntion reads user input, sends it the server,
+    waits for a response, and prints it out 
+    - It handles the case where the server closes the connection unexpectedly
+*/
+
+
     char sendline[MAXLINE], recvline[MAXLINE]; 
 
     while(fgets(sendline, MAXLINE, fp) != NULL){
