@@ -35,6 +35,39 @@
 
 - The server child terminates by calling exit, and sends FIN to the client, and the client sends and ACK. At this point, the connection is completely terminated
 
+## Socket Programming 
+### `socket()` - Create a socket 
+```c
+int  socket(int domain, int type, int protocol); 
+```
+- The socket creates and endpoint for communication and returns a socket descriptor representing the endpoint. 
+
+#### Description : understanding the `socket()` parameters
+
+- **domain** : `AF_INET` (IPv4 family) / `AF_INET6` (IPv6 family), these constants are defined in `sys/socket.h`
+- **type** : `SOCK_STREAM` (tcp) / `SOCK_DGRAM` (udp)
+- **protocol**: This is set to 0, which means the system will automatically select the default protocol for the given domain and type.
+
+
+- Stream sockets are either active or passive
+
+- Active sockets are used by clients who start connection requests with `connect()`
+
+- By default, `socket()` creates active sockets
+
+- Passive sockets are used by servers to accept connection requests with the `connect()` call 
+
+- You can transform active socket to passive socket by binding a name to the socket (IP address, Port number) with the `bind()` call and by indicating a willingness to accepts connections with the `listen()` call.
+
+- A passive socket can not be used to start requests 
+
+- The `bind()` call applied to a stream socket lets the application program specify the network from which it is willing to accept connection requests
+
+- After a connection has been stablished between stream sockets, you can use `read()`, `write()`, `send()` or `recv()` to send data on stream sockets.  
+
+#### Returned value 
+- If successful, socket() returns a nonnegative socket descriptor
+- If unsuccessful, socket() returns -1
 ## DHCP Client 
 
 1. **It checks if the program is run with exactly 3 arguments: The program name, IP address, and a command (CHECKOUT/RELEASE)**
