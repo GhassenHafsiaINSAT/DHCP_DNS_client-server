@@ -1,4 +1,4 @@
-# TCP Client/Server 
+## TCP Client/Server 
 
 - Our **client/server** example is a **DHCP server** that performs the following steps: 
     - The client reads a MAC address from its standard input and writes the line to the server, requesting IP address 
