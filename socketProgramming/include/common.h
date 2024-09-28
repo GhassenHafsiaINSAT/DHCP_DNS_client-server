@@ -1,13 +1,13 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <sys/socket.h> // basic socket definition
+#include <sys/socket.h> 
 #include <sys/types.h>
 #include <signal.h>
 #include <stdio.h>
-#include <string.h>     // String manipulation function
+#include <string.h>     
 #include <unistd.h>
-#include <arpa/inet.h>  // definition for internet operations like socket and bind
+#include <arpa/inet.h>  
 #include <stdarg.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -23,6 +23,10 @@
 
 // Define the function pointer type for signal handlers
 typedef void Sigfunc(int);
+
+// DHCP Pool configurations 
+#define MAX_CLIENT 20 
+#define MAX_POOL 20
 
 // Port
 #define SERVER_PORT 9877
@@ -56,6 +60,29 @@ typedef void Sigfunc(int);
     exit(EXIT_FAILURE); \
 } while(0)
 
+typedef struct 
+{   
+    // when client requests an IP address, the server checks if the client already has active lease
+    // if it has it reuse the existing ip, if not, it assigns a new one
+    
+    char mac_address[MAC_LEN]; 
+    char ip_address[IP_LEN]; 
+    time_t lease_start; 
+    time_t lease_end; 
+} Client;
+
+typedef struct 
+
+{
+    // Represents the whole set of IP addresses managed by the server
+
+    char IP_address[MAX_POOL][INET_ADDRSTRLEN];    // pointer to an array of IP address structure 
+    int pool_size;      // number of IP addresses in the pool 
+    char allocated[MAX_POOL]; 
+    Client clients[MAX_CLIENT]; 
+    int client_count; 
+} IPAddressPool;
+
 
 void str_echo(int sockfd); 
 
@@ -70,5 +97,19 @@ ssize_t readn(int fields, void *buff, size_t nbytes);
 void sig_chld(int signo);
 
 void str_cli(FILE *fp, int sockfd); 
+
+unsigned int ip_to_int(const char *ip); 
+
+void int_to_ip(unsigned int ip, char *buffer); 
+
+// Initializing the IP pool, with defined range of addresses and mark all IPs as available initially
+void init_pool(IPAddressPool *pool, const char *start_ip, const char *end_ip); 
+
+
+// Check the IP pool for an available IP and assing it temporarily
+int checkout_ip(IPAddressPool *pool, char *mac_address, char *assigned_ip); 
+
+// marks the ip address as available 
+int releasing_ip(IPAddressPool *pool, char *mac_address); 
 
 #endif // COMMON_H

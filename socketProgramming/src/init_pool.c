@@ -1,4 +1,4 @@
-#include "DHCP.h"
+#include "common.h"
 
 void init_pool(IPAddressPool *pool, const char *start_ip, const char *end_ip){
     

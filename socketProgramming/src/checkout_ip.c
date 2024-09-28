@@ -1,4 +1,4 @@
-#include "DHCP.h"
+#include "common.h"
 
 
 int checkout_ip(IPAddressPool *pool, char *mac_address, char *assigned_ip){

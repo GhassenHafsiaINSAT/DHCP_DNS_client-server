@@ -1,4 +1,4 @@
-#include "DHCP.h"
+#include "common.h"
 
 int releasing_ip(IPAddressPool *pool, char *mac_address){
     for(int i=0; i<pool->client_count; i++){

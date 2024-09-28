@@ -1,4 +1,4 @@
-#include "DHCP.h"
+#include "common.h"
 
 unsigned int ip_to_int(const char *ip) {
     struct in_addr addr;
